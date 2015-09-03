@@ -27,7 +27,7 @@ class AddClientAssets
         $event->forumBootstrapper('imageattachments/main');
 
         $event->forumTranslations([
-            // 'imageattachments.hello_world'
+            'imageattachments.post_anyway'
         ]);
 
         $event->adminAssets([
