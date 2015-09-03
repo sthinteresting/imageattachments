@@ -10,6 +10,7 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Illuminate\Support\Str;
+use Flarum\Core;
 
 class UploadAction extends JsonApiAction {
     protected $bus;
@@ -35,7 +36,7 @@ class UploadAction extends JsonApiAction {
             ]);
             $uploadName = Str::lower(Str::quickRandom()) . '.jpg';
             $mount->move("source://".pathinfo($tmpFile, PATHINFO_BASENAME), "target://$uploadName");
-            $results['img_'.$image_key] = $urlGenerator->toAsset($dir).'/'.$uploadName;
+            $results['img_'.$image_key] = Core::url().'/assets/'.$dir.'/'.$uploadName;
         }
         return new JsonResponse($results);
     }
