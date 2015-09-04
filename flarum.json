@@ -1,9 +1,10 @@
 {
     "name": "imageattachments",
     "title": "Image Attachments",
-    "description": "Allow users to upload image attachments while posting",
+    "description": "Allow users to paste/drop image attachments while posting.",
     "keywords": [
-
+	"image",
+	"attachment"
     ],
     "version": "0.1.0",
     "author": {
@@ -16,8 +17,8 @@
         "flarum": ">0.1.0-beta"
     },
     "icon": {
-        "name": "",
-        "backgroundColor": "",
-        "color": ""
+        "name": "file-image-o",
+        "backgroundColor": "#1F78FF",
+        "color": "#fff"
     }
 }
