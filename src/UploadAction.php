@@ -13,13 +13,32 @@ use Illuminate\Support\Str;
 use Flarum\Core;
 
 class UploadAction implements Action {
+    /**
+     * @var Dispatcher $bus
+     */
     protected $bus;
     
-    public function __construct(Dispatcher $bus)
+    /**
+     * @var FilesystemInterface $uploadDir
+     */
+    protected $uploadDir;
+    
+    /**
+     * Upload image attachments
+     * @param Dispatcher $bus
+     * @param FilesystemInterface $uploadDir This will set in extention bootstrap class
+     */
+    public function __construct(Dispatcher $bus/*, FilesystemInterface $uploadDir*/)
     {
         $this->bus = $bus;
+        //$this->uploadDir = $uploadDir;
     }
     
+    /**
+     * Handle upload requests
+     * @param Request $request
+     * @todo Add upload event
+     */
     public function handle(Request $request)
     {
         $images = $request->http->getUploadedFiles()['images'];
@@ -28,15 +47,15 @@ class UploadAction implements Action {
             $tmpFile = tempnam(sys_get_temp_dir(), 'image');
             $image->moveTo($tmpFile);
             $urlGenerator = app('Flarum\Http\UrlGeneratorInterface');
-            $dir = 'uploads/'.date('Ym/d');
-            $path = './assets/'.$dir;
+            $dir = date('Ym/d');
+            $path = './assets/uploads';
             $mount = new MountManager([
                 'source' => new Filesystem(new Local(pathinfo($tmpFile, PATHINFO_DIRNAME))),
                 'target' => new Filesystem(new Local($path)),
             ]);
             $uploadName = Str::lower(Str::quickRandom()) . '.jpg';
-            $mount->move("source://".pathinfo($tmpFile, PATHINFO_BASENAME), "target://$uploadName");
-            $results['img_'.$image_key] = Core::url().'/assets/'.$dir.'/'.$uploadName;
+            $mount->move("source://".pathinfo($tmpFile, PATHINFO_BASENAME), "target://$dir/$uploadName");
+            $results['img_'.$image_key] = $urlGenerator->toAsset('uploads/'.$dir.'/'.$uploadName);
         }
         return new JsonResponse($results);
     }
