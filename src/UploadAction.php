@@ -28,10 +28,10 @@ class UploadAction implements Action {
      * @param Dispatcher $bus
      * @param FilesystemInterface $uploadDir This will set in extention bootstrap class
      */
-    public function __construct(Dispatcher $bus/*, FilesystemInterface $uploadDir*/)
+    public function __construct(Dispatcher $bus, FilesystemInterface $uploadDir)
     {
         $this->bus = $bus;
-        //$this->uploadDir = $uploadDir;
+        $this->uploadDir = $uploadDir;
     }
     
     /**
@@ -51,7 +51,7 @@ class UploadAction implements Action {
             $path = './assets/uploads';
             $mount = new MountManager([
                 'source' => new Filesystem(new Local(pathinfo($tmpFile, PATHINFO_DIRNAME))),
-                'target' => new Filesystem(new Local($path)),
+                'target' => $this->uploadDir,
             ]);
             $uploadName = Str::lower(Str::quickRandom()) . '.jpg';
             $mount->move("source://".pathinfo($tmpFile, PATHINFO_BASENAME), "target://$dir/$uploadName");
