@@ -43,19 +43,11 @@ class UploadAction implements Action {
     {
         $images = $request->http->getUploadedFiles()['images'];
         $results = [];
+        $fs = new \S12g\ImageAttachments\Drivers\Local();
         foreach($images as $image_key => $image) {
             $tmpFile = tempnam(sys_get_temp_dir(), 'image');
             $image->moveTo($tmpFile);
-            $urlGenerator = app('Flarum\Http\UrlGeneratorInterface');
-            $dir = date('Ym/d');
-            $path = './assets/uploads';
-            $mount = new MountManager([
-                'source' => new Filesystem(new Local(pathinfo($tmpFile, PATHINFO_DIRNAME))),
-                'target' => $this->uploadDir,
-            ]);
-            $uploadName = Str::lower(Str::quickRandom()) . '.jpg';
-            $mount->move("source://".pathinfo($tmpFile, PATHINFO_BASENAME), "target://$dir/$uploadName");
-            $results['img_'.$image_key] = $urlGenerator->toAsset('uploads/'.$dir.'/'.$uploadName);
+            $results['img_'.$image_key] = $fs->saveImage($tmpFile);
         }
         return new JsonResponse($results);
     }

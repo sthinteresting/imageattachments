@@ -3,5 +3,8 @@
         "psr-4": {
             "S12g\\ImageAttachments\\": "src/"
         }
+    },
+    "require": {
+        "zgldh/qiniu-laravel-storage": "^0.2.1"
     }
 }
