@@ -13,22 +13,24 @@ use Exception;
 class Qiniu implements DriverInterface
 {
     public $name = 'qiniu';
+    protected $config;
     
-    public function __construct($config) {
-        
+    public function __construct($config)
+    {
+        $this->config = $config;
     }
     
     public function saveImage($tmpFile)
     {
         $upManager = new UploadManager();
-        $auth = new Auth('a', 's');
-        $token = $auth->uploadToken('b');
+        $auth = new Auth($this->config['accessToken'], $this->config['secretToken']);
+        $token = $auth->uploadToken($this->config['bucketName']);
         $uploadName = date('Y/m/d/').Str::lower(Str::quickRandom()).'.jpg';
         list($ret, $error) = $upManager->put($token, $uploadName, file_get_contents($tmpFile));
         if (!$ret){
             throw new Exception($error->message());
         }
-        return 'http://7o51ac.com1.z0.glb.clouddn.com/'.$uploadName;
+        return rtrim($this->config['baseUrl'], '/').'/'.$uploadName;
     }
     
     public function getConfigItems()

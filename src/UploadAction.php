@@ -40,12 +40,13 @@ class UploadAction implements Action {
      * Handle upload requests
      * @param Request $request
      * @todo Add upload event
+     * @todo Add upload permissions
      */
     public function handle(Request $request)
     {
         $images = $request->http->getUploadedFiles()['images'];
         $results = [];
-        
+        // get driver name
         $driver_name = $this->settings->get('imageattachments.driver') ?: 'local';
         $driver_list = [
             'local' => '\S12g\ImageAttachments\Drivers\Local',
@@ -56,11 +57,12 @@ class UploadAction implements Action {
             $driver_name = 'local';
             $driver = $driver_list['local'];
         }
-        
+        // get config
         $config = $this->settings->get('imageattachments.'.$driver_name.'.config');
-        
+        $config = json_decode($config, true) ?: [];
+        // get driver
         $fs = new $driver($config);
-        
+        // save images
         try {
             foreach($images as $image_key => $image) {
                 $tmpFile = tempnam(sys_get_temp_dir(), 'image');

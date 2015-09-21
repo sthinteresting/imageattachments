@@ -10,6 +10,11 @@ class Local implements DriverInterface
 {
     public $name = 'local';
     
+    public function __construct($config)
+    {
+        
+    }
+    
     public function saveImage($tmpFile)
     {
         $dir = date('Ym/d');
