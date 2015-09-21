@@ -30,6 +30,6 @@ class Local implements DriverInterface
     
     public function getConfigItems()
     {
-    
+        return [];
     }
 }

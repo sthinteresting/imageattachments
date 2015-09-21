@@ -35,6 +35,23 @@ class Qiniu implements DriverInterface
     
     public function getConfigItems()
     {
-    
+        return [
+            'accessToken' => [
+                'hint' => 'Put your access token here.',
+                'title' => 'Access Token'
+            ],
+            'secretToken' => [
+                'hint' => 'Put your secret token here.',
+                'title' => 'Secret Token'
+            ],
+            'bucketName' => [
+                'hint' => 'Bucket which storage images.',
+                'title' => 'Bucket Name'
+            ],
+            'baseUrl' => [
+                'hint' => 'e.g: http://dead33.com1.z0.glb.clouddn.com',
+                'title' => 'Base URL'
+            ]
+        ];
     }
 }
