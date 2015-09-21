@@ -5,6 +5,6 @@
         }
     },
     "require": {
-        "zgldh/qiniu-laravel-storage": "^0.2.1"
+        "qiniu/php-sdk": "^7.0"
     }
 }
