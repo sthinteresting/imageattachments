@@ -33,7 +33,7 @@ class Qiniu implements DriverInterface
         return rtrim($this->config['baseUrl'], '/').'/'.$uploadName;
     }
     
-    public function getConfigItems()
+    public static function getConfigItems()
     {
         return [
             'accessToken' => [

@@ -47,11 +47,18 @@ class UploadAction implements Action {
         $images = $request->http->getUploadedFiles()['images'];
         $results = [];
         // get driver name
-        $driver_name = $this->settings->get('imageattachments.driver') ?: 'local';
         $driver_list = [
             'local' => '\S12g\ImageAttachments\Drivers\Local',
             'qiniu' => '\S12g\ImageAttachments\Drivers\Qiniu'
         ];
+        // return driver name if in admin and no images
+        if ($request->actor->isAdmin() && !is_array($images)) {
+            foreach ($driver_list as $name => $driver) {
+                $results[$name] = $driver::getConfigItems();
+            }
+            return new JsonResponse($results);
+        }
+        $driver_name = $this->settings->get('imageattachments.driver') ?: 'local';
         $driver = $driver_list[$driver_name];
         if (!$driver) {
             $driver_name = 'local';

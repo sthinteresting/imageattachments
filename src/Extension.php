@@ -19,13 +19,11 @@ class Extension extends BaseExtension
                 's12g.imageattachments.upload',
                 'S12g\ImageAttachments\UploadAction'
             );
+            $event->get(
+                '/s12g/image_attachments',
+                's12g.imageattachments.upload',
+                'S12g\ImageAttachments\UploadAction'
+            );
         });
-        // register image provider
-        $uploadsFilesystem = function () {
-            return new Filesystem(new Local(public_path('assets/uploads')));
-        };
-        $this->app->when('S12g\ImageAttachments\UploadAction')
-            ->needs('League\Flysystem\FilesystemInterface')
-            ->give($uploadsFilesystem);
     }
 }

@@ -28,7 +28,7 @@ class Local implements DriverInterface
         return $urlGenerator->toAsset('uploads/'.$dir.'/'.$uploadName);
     }
     
-    public function getConfigItems()
+    public static function getConfigItems()
     {
         return [];
     }
