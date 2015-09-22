@@ -78,6 +78,7 @@ class UploadAction implements Action {
                 $tmpFile = tempnam(sys_get_temp_dir(), 'image');
                 $image->moveTo($tmpFile);
                 $results['img_'.$image_key] = $fs->saveImage($tmpFile);
+                @unlink($tmpFile);
             }
         } catch (Exception $e) {
             throw $e;
