@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Local implements DriverInterface
 {
-    public $name = 'local';
+    const title = 'Local Filesystem';
     
     public function __construct($config)
     {

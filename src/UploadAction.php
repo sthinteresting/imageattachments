@@ -54,7 +54,10 @@ class UploadAction implements Action {
         // return driver name if in admin and no images
         if ($request->actor->isAdmin() && !is_array($images)) {
             foreach ($driver_list as $name => $driver) {
-                $results[$name] = $driver::getConfigItems();
+                $results[$name] = [
+                    'config' => $driver::getConfigItems() ?: null,
+                    'title' => $driver::title
+                ];
             }
             return new JsonResponse($results);
         }

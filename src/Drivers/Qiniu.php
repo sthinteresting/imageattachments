@@ -12,7 +12,8 @@ use Exception;
 
 class Qiniu implements DriverInterface
 {
-    public $name = 'qiniu';
+    const title = 'Qiniu Cloud';
+    
     protected $config;
     
     public function __construct($config)
