@@ -72,7 +72,7 @@ class ImageAttachmentsModal extends Modal {
         (function(key) {
           var cfg = configItems[key];
           var configKey = 'imageattachments.' + currentDriver + '.config';
-          var currentValue = (JSON.parse(app.config[configKey]) || {})[key] || '';
+          var currentValue = (JSON.parse(app.config[configKey] || '{}') || {})[key] || '';
           ui.push(
             <div className="Form-group">
               <label>{cfg.title}</label>
@@ -121,7 +121,7 @@ class ImageAttachmentsModal extends Modal {
       'imageattachments.driver': currentDriver
     };
     var configItems = drivers[currentDriver].config;
-    if (configItems && configItems.length) {
+    if (configItems) {
       var configKeys = Object.keys(configItems);
       var configObj = configKeys.reduce(function(prev, key) {
         prev[key] = $target.find('[name="' + key + '"]').val();
