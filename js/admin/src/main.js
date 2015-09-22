@@ -117,16 +117,18 @@ class ImageAttachmentsModal extends Modal {
     // get current Driver
     var currentDriver = this.driver();
     // get config keys
-    var configItems = drivers[currentDriver].config;
-    var configKeys = Object.keys(configItems);
-    var configObj = configKeys.reduce(function(prev, key) {
-      prev[key] = $target.find('[name="' + key + '"]').val();
-      return prev;
-    }, {});
     var configToSave = {
       'imageattachments.driver': currentDriver
     };
-    configToSave['imageattachments.' + currentDriver + '.config'] = JSON.stringify(configObj);
+    var configItems = drivers[currentDriver].config;
+    if (configItems && configItems.length) {
+      var configKeys = Object.keys(configItems);
+      var configObj = configKeys.reduce(function(prev, key) {
+        prev[key] = $target.find('[name="' + key + '"]').val();
+        return prev;
+      }, {});
+      configToSave['imageattachments.' + currentDriver + '.config'] = JSON.stringify(configObj);
+    }
     this.loading(true);
     drivers = '';
     
