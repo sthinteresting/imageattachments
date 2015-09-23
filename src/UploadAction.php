@@ -49,7 +49,8 @@ class UploadAction implements Action {
         // get driver name
         $driver_list = [
             'local' => '\S12g\ImageAttachments\Drivers\Local',
-            'qiniu' => '\S12g\ImageAttachments\Drivers\Qiniu'
+            'qiniu' => '\S12g\ImageAttachments\Drivers\Qiniu',
+            'tietuku' => '\S12g\ImageAttachments\Drivers\Tietuku'
         ];
         // return driver name if in admin and no images
         if ($request->actor->isAdmin() && !is_array($images)) {
