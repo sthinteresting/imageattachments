@@ -24,7 +24,7 @@ class Tietuku implements DriverInterface
     {
         // calculate upload token
         $param = [
-            'deadline' => 1442983644,
+            'deadline' => time() + 120,
             'aid' => $this->config['albumId'],
             'from' => 'file'
         ];
