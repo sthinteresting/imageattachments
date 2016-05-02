@@ -1,3 +1,11 @@
+
+{
+    "name": "sthinteresting/imageattachments",
+    "description": "Paste + drag and drop images",
+    "type": "flarum-extension",
+    "require": {
+        "flarum/core": "^0.1.0-beta.3"
+    },
 {
     "autoload": {
         "psr-4": {
